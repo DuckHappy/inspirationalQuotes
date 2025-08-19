@@ -33,18 +33,14 @@ export default function FavoritesDrawer() {
         </button>
       </div>
 
-      {/* Drawer */}
       {open && (
         <div className="fixed inset-0 z-40">
-          {/* Overlay */}
           <div
             onClick={() => setOpen(false)}
             className="absolute inset-0 bg-black bg-opacity-50"
           />
 
-          {/* Drawer Panel */}
           <div className="absolute right-0 top-0 h-full w-80 bg-[#fafad2] shadow-xl flex flex-col z-50 transition-transform duration-300 ease-in-out">
-            {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-300">
               <h2 className="flex items-center text-lg font-semibold text-gray-800">
                 <svg
@@ -56,7 +52,7 @@ export default function FavoritesDrawer() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="lucide lucide-heart h-5 w-5 text-red-500 mr-2"
+                  className="lucide lucide-heart h-7 w-7 text-red-500 mr-2"
                   aria-hidden="true"
                 >
                   <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>
