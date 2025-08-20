@@ -1,7 +1,7 @@
 import useCache from "../../hooks/cache/index";
 
 
-export default function Card({ quote: string, author: string }) {
+export default function Card({ quote, author }) {
 
   const { setItem, cache } = useCache();
 

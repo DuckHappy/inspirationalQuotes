@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useCache from "../../hooks/cache/index";
 
+
 export default function FavoritesDrawer() {
   const [open, setOpen] = useState(false);
   const { setItem, getItem, removeItem, cache } = useCache();
@@ -18,7 +19,7 @@ export default function FavoritesDrawer() {
 
   return (
     <>
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 justify-center ">
         <button
           onClick={() => setOpen(true)}
           className="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600"
