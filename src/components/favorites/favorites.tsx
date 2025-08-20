@@ -4,7 +4,8 @@ import useCache from "../../hooks/cache/index";
 
 export default function FavoritesDrawer() {
   const [open, setOpen] = useState(false);
-  const { setItem, getItem, removeItem, cache } = useCache();
+  //getItem delete , it don't use it
+  const { setItem, removeItem, cache } = useCache();
 
   // demo
   const addFavorite = () => {

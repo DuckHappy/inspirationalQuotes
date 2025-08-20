@@ -1,9 +1,14 @@
 import useCache from "../../hooks/cache/index";
 
+interface CardProps {
+  quote:string;
+  author:string;
+}
 
-export default function Card({ quote, author }) {
+export default function Card({ quote, author }):CardProps {
 
-  const { setItem, cache } = useCache();
+  //delete cache because it don't use it
+  const { setItem } = useCache();
 
   const addFavorite = () => {
     const id = Date.now().toString();
