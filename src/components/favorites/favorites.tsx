@@ -37,12 +37,12 @@ export default function FavoritesDrawer() {
         <div className="fixed inset-0 z-40">
           <div
             onClick={() => setOpen(false)}
-            className="absolute inset-0 bg-black bg-opacity-50"
+            className="absolute inset-0 bg-black/50"
           />
 
-          <div className="absolute right-0 top-0 h-full w-80 bg-[#fafad2] shadow-xl flex flex-col z-50 transition-transform duration-300 ease-in-out">
+          <div className="absolute right-0 top-0 h-full w-80 bg-[#262626] shadow-xl flex flex-col z-50 transition-transform duration-300 ease-in-out">
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-300">
-              <h2 className="flex items-center text-lg font-semibold text-gray-800">
+              <h2 className="flex items-center text-lg font-semibold text-white-800">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="22"
@@ -74,7 +74,7 @@ export default function FavoritesDrawer() {
                 Object.values(cache).map((fav: any) => (
                   <div
                     key={fav.id}
-                    className="bg-[#d2a679] text-gray-800 rounded-lg border border-brown-700 p-4 mb-3 relative shadow-sm"
+                    className="bg-[#ddd] text-gray-800 rounded-lg border border-brown-700 p-4 mb-3 relative shadow-sm"
                   >
                     <button
                       onClick={() => removeItem(fav.id)}
@@ -83,8 +83,8 @@ export default function FavoritesDrawer() {
                       ✕
                     </button>
                     <p className="italic text-sm mb-2">"{fav.quote}"</p>
-                    <p className="text-xs text-gray-700 mb-2">— {fav.author}</p>
-                    <span className="inline-block bg-brown-700 text-white text-xs px-3 py-1 rounded-full">
+                    <p className="text-xs text-black-700 mb-2">— {fav.author}</p>
+                    <span className="inline-block bg-brown-700 text-black-500 text-xs px-3 py-1 rounded-full">
                       {fav.tag}
                     </span>
                   </div>

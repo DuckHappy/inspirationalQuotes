@@ -1,8 +1,7 @@
-import { useState } from "react";
 import useCache from "../../hooks/cache/index";
 
 
-export default function Card({ quote, author }) {
+export default function Card({ quote: string, author: string }) {
 
   const { setItem, cache } = useCache();
 
