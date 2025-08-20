@@ -1,21 +1,9 @@
 import { useState } from "react";
-import useCache from "../../hooks/cache/index";
-
+import { useCacheContext } from "../../context/cache";
 
 export default function FavoritesDrawer() {
   const [open, setOpen] = useState(false);
-  const { setItem, getItem, removeItem, cache } = useCache();
-
-  // demo
-  const addFavorite = () => {
-    const id = Date.now().toString();
-    setItem(id, {
-      id,
-      quote: "The best time to plant a tree was 20 years ago. The second best time is now.",
-      author: "Chinese Proverb",
-      tag: "Wisdom",
-    });
-  };
+  const { removeItem, cache } = useCacheContext();
 
   return (
     <>
@@ -25,12 +13,6 @@ export default function FavoritesDrawer() {
           className="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600"
         >
           Open Favorites ({Object.keys(cache).length})
-        </button>
-        <button
-          onClick={addFavorite}
-          className="px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600"
-        >
-          Add Favorite
         </button>
       </div>
 
