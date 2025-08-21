@@ -25,7 +25,26 @@ function App() {  const [currentIndex, setCurrentIndex] = useState(0);
   );
 }
 
-function AppContent({ currentIndex, setCurrentIndex, quotesArray, currentQuote }) {
+type Quote = {
+  quote: string;
+  author: string;
+  tag?: string;
+  [key: string]: any;
+};
+
+type AppContentProps = {
+  currentIndex: number;
+  setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
+  quotesArray: Quote[];
+  currentQuote: Quote;
+};
+
+function AppContent({
+  currentIndex,
+  setCurrentIndex,
+  quotesArray,
+  currentQuote,
+}: AppContentProps) {
   const { getItem, setItem } = useCacheContext();
 
   const getNewQuoteIndex = () => {
