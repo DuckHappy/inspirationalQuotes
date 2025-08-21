@@ -1,64 +1,69 @@
-import "./App.css";
 import { CacheProvider, useCacheContext } from "./context/cache.tsx";
 import QuoteCount from "./components/QuoteCount.tsx";
 import Header from "./components/Header.tsx";
 import FavoritesDrawer from "./components/favorites/favorites.tsx";
 import Card from "./components/Card/Card.tsx";
-import quotes from "../mockup/useQuoteApi.json";
-import { useState } from "react";
+import quotesData from "../mockup/useQuoteApi.json";
+import { useState, useEffect } from "react";
 
-
-function App() {  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const quotesArray = Object.values(quotes).filter(Boolean);
-  const currentQuote = quotesArray[currentIndex];
+function App() {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <CacheProvider>
       <AppContent
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
-        quotesArray={quotesArray}
-        currentQuote={currentQuote}
       />
     </CacheProvider>
   );
 }
 
-type Quote = {
-  quote: string;
-  author: string;
-  tag?: string;
-  [key: string]: any;
-};
-
 type AppContentProps = {
   currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
-  quotesArray: Quote[];
-  currentQuote: Quote;
 };
 
-function AppContent({
-  currentIndex,
-  setCurrentIndex,
-  quotesArray,
-  currentQuote,
-}: AppContentProps) {
+function AppContent({ currentIndex, setCurrentIndex }: AppContentProps) {
   const { getItem, setItem } = useCacheContext();
 
-  const getNewQuoteIndex = () => {
-    let idx = Math.floor(Math.random() * quotesArray.length);
-    while (idx === currentIndex && quotesArray.length > 1) {
-      idx = Math.floor(Math.random() * quotesArray.length);
+  useEffect(() => {
+    if (!getItem("quotes")) {
+      setItem("quotes", quotesData);
     }
-    return idx;
+  }, [getItem, setItem]);
+
+  const quotesArray = getItem("quotes") || [];
+  const currentQuote = quotesArray[currentIndex];
+
+  const handleAddFavorite = () => {
+    if (!currentQuote) return;
+    const id = Date.now().toString();
+    const newFavorite = {
+      id,
+      quote: currentQuote.quote,
+      author: currentQuote.author,
+      tag: currentQuote.tag,
+    };
+    const currentFavorites = getItem("favorites") || [];
+    const exists = currentFavorites.some(
+      (fav: any) =>
+        fav.quote === currentQuote.quote && fav.author === currentQuote.author
+    );
+    if (!exists) {
+      setItem("favorites", [...currentFavorites, newFavorite]);
+    }
   };
 
   const handleNewQuote = () => {
-    setCurrentIndex(getNewQuoteIndex());
-    const count = getItem("quote-count") || 1;
-    setItem("quote-count", count + 1);
+    const currentCount = getItem("quote-count") || 0;
+    setItem("quote-count", currentCount + 1);
+
+    if (currentIndex < quotesArray.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      setCurrentIndex(0);
+    }
   };
 
   return (
@@ -71,8 +76,8 @@ function AppContent({
             quote={currentQuote.quote}
             author={currentQuote.author}
             tag={currentQuote.tag}
-            onAddFavorite={() => {}}
-            onNewQuote={handleNewQuote}
+            OnNewQuote={handleNewQuote}
+            OnAddFavorite={handleAddFavorite}
           />
         )}
       </main>

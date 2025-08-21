@@ -5,14 +5,12 @@ export default function FavoritesDrawer() {
   const [open, setOpen] = useState(false);
   const { getItem, setItem } = useCacheContext();
 
-  // Inicializa favoritos solo si no existen
   useEffect(() => {
     if (!getItem("favorites")) {
       setItem("favorites", []);
     }
-  }, [getItem, setItem]);
+  }, []);
 
-  // Elimina un favorito del array y actualiza el caché
   const handleRemoveFavorite = (id: string) => {
     const currentFavorites = getItem("favorites") || [];
     const updatedFavorites = currentFavorites.filter(
