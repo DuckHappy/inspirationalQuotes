@@ -2,7 +2,7 @@ import { useCacheContext } from "../context/cache";
 
 export default function QuoteCount() {
   const { getItem } = useCacheContext();
-  const count = getItem("quote-count") || 1;
+  const count = getItem("quote-count") || 0;
 
   return (
     <div className="mt-4 flex justify-left absolute left-5">

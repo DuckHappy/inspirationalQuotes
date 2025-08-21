@@ -15,17 +15,20 @@ export default function Card({
   onAddFavorite,
   onNewQuote,
 }: CardProps) {
-  const { setItem } = useCacheContext();
+  const { getItem, setItem } = useCacheContext();
 
   const handleAddFavorite = () => {
     const id = Date.now().toString();
-    setItem(id, {
-      id,
-      quote,
-      author,
-      tag,
-    });
-    if (onAddFavorite) onAddFavorite();
+    const newFavorite = { id, quote, author, tag };
+    const currentFavorites = getItem("favorites") || [];
+    // Evitar duplicados por quote y author
+    const exists = currentFavorites.some(
+      (fav: any) => fav.quote === quote && fav.author === author
+    );
+    if (!exists) {
+      setItem("favorites", [...currentFavorites, newFavorite]);
+      if (onAddFavorite) onAddFavorite();
+    }
   };
 
   return (
@@ -101,4 +104,3 @@ export default function Card({
     </div>
   );
 }
-
