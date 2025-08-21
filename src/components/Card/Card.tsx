@@ -1,6 +1,5 @@
 import { useCacheContext } from "../../context/cache";
 
-
 export default function Card({ quote, author, onAddFavorite, onNewQuote }) {
   const { setItem } = useCacheContext();
 

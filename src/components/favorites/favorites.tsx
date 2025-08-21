@@ -51,27 +51,29 @@ export default function FavoritesDrawer() {
             </div>
 
             <div className="p-4 overflow-y-auto flex-1">
-              {Object.keys(cache).length === 0 ? (
+              {Object.values(cache).filter((fav: any) => fav && fav.quote).length === 0 ? (
                 <p className="text-gray-500 italic">No favorites yet.</p>
               ) : (
-                Object.values(cache).map((fav: any) => (
-                  <div
-                    key={fav.id}
-                    className="bg-[#ddd] text-gray-800 rounded-lg border border-brown-700 p-4 mb-3 relative shadow-sm"
-                  >
-                    <button
-                      onClick={() => removeItem(fav.id)}
-                      className="absolute top-2 right-2 text-gray-700 hover:text-black"
+                Object.values(cache)
+                  .filter((fav: any) => fav && fav.quote)
+                  .map((fav: any) => (
+                    <div
+                      key={fav.id}
+                      className="bg-[#ddd] text-gray-800 rounded-lg border border-brown-700 p-4 mb-3 relative shadow-sm"
                     >
-                      ✕
-                    </button>
-                    <p className="italic text-sm mb-2">"{fav.quote}"</p>
-                    <p className="text-xs text-black-700 mb-2">— {fav.author}</p>
-                    <span className="inline-block bg-brown-700 text-black-500 text-xs px-3 py-1 rounded-full">
-                      {fav.tag}
-                    </span>
-                  </div>
-                ))
+                      <button
+                        onClick={() => removeItem(fav.id)}
+                        className="absolute top-2 right-2 text-gray-700 hover:text-black"
+                      >
+                        ✕
+                      </button>
+                      <p className="italic text-sm mb-2">"{fav.quote}"</p>
+                      <p className="text-xs text-black-700 mb-2">{fav.author}</p>
+                      <span className="inline-block bg-brown-700 text-black-500 text-xs px-3 py-1 rounded-full">
+                        {fav.tag}
+                      </span>
+                    </div>
+                  ))
               )}
             </div>
           </div>

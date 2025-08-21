@@ -1,5 +1,5 @@
 import "./App.css";
-import { CacheProvider } from "./context/cache.tsx";
+import { CacheProvider, useCacheContext } from "./context/cache.tsx";
 import QuoteCount from "./components/QuoteCount.tsx";
 import Header from "./components/Header.tsx";
 import FavoritesDrawer from "./components/favorites/favorites.tsx";
@@ -8,15 +8,26 @@ import quotes from "../mockup/useQuoteApi.json";
 import { useState } from "react";
 
 
-function App() {
-  // Manage current quote index
-  const [currentIndex, setCurrentIndex] = useState(0);
+function App() {  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Get current quote
-  const quotesArray = Object.values(quotes).filter(Boolean); // filter out falsy values
+  const quotesArray = Object.values(quotes).filter(Boolean);
   const currentQuote = quotesArray[currentIndex];
 
-  // Function to get a new random quote index (not the same as current)
+  return (
+    <CacheProvider>
+      <AppContent
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
+        quotesArray={quotesArray}
+        currentQuote={currentQuote}
+      />
+    </CacheProvider>
+  );
+}
+
+function AppContent({ currentIndex, setCurrentIndex, quotesArray, currentQuote }) {
+  const { getItem, setItem } = useCacheContext();
+
   const getNewQuoteIndex = () => {
     let idx = Math.floor(Math.random() * quotesArray.length);
     while (idx === currentIndex && quotesArray.length > 1) {
@@ -25,33 +36,31 @@ function App() {
     return idx;
   };
 
-  // Handler to change quote
   const handleNewQuote = () => {
     setCurrentIndex(getNewQuoteIndex());
+    const count = getItem("quote-count") || 1;
+    setItem("quote-count", count + 1);
   };
 
   return (
-    <CacheProvider>
-      <div>
-        <QuoteCount />
-        <Header />
-        <main>
-          {currentQuote && (
-            <Card
-              quote={currentQuote.quote}
-              author={currentQuote.author}
-              tag={currentQuote.tag}
-              onAddFavorite={() => {}}
-              onNewQuote={handleNewQuote}
-            />
-          )}
-        </main>
-        <aside>
-          <FavoritesDrawer />
-        </aside>
-        <></>
-      </div>
-    </CacheProvider>
+    <div>
+      <QuoteCount />
+      <Header />
+      <main>
+        {currentQuote && (
+          <Card
+            quote={currentQuote.quote}
+            author={currentQuote.author}
+            tag={currentQuote.tag}
+            onAddFavorite={() => {}}
+            onNewQuote={handleNewQuote}
+          />
+        )}
+      </main>
+      <aside>
+        <FavoritesDrawer />
+      </aside>
+    </div>
   );
 }
 

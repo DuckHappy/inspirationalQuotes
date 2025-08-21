@@ -1,13 +1,8 @@
-import { useEffect } from "react";
 import { useCacheContext } from "../context/cache";
 
 export default function QuoteCount() {
-  const { getItem, setItem } = useCacheContext();
-  const count = getItem("quote-count") || 0;
-
-  useEffect(() => {
-    setItem("quote-count", count + 1);
-  }, []);
+  const { getItem } = useCacheContext();
+  const count = getItem("quote-count") || 1;
 
   return (
     <div className="mt-4 flex justify-left absolute left-5">
