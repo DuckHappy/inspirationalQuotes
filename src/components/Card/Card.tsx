@@ -1,33 +1,19 @@
-import { useCacheContext } from "../../context/cache";
-
 type CardProps = {
   quote: string;
   author: string;
   tag?: string;
-  onAddFavorite: () => void;
-  onNewQuote: () => void;
+  OnAddFavorite: () => void;
+  OnNewQuote: () => void;
 };
 
+// Componente Visual, no es necesario que tenga nada de logica
 export default function Card({
   quote,
   author,
   tag,
-  onAddFavorite,
-  onNewQuote,
+  OnAddFavorite,
+  OnNewQuote,
 }: CardProps) {
-  const { setItem } = useCacheContext();
-
-  const handleAddFavorite = () => {
-    const id = Date.now().toString();
-    setItem(id, {
-      id,
-      quote,
-      author,
-      tag,
-    });
-    if (onAddFavorite) onAddFavorite();
-  };
-
   return (
     <div className="mb-12">
       <div className="w-full max-w-2xl mx-auto shadow-lg transition-all duration-300 hover:shadow-xl">
@@ -36,7 +22,7 @@ export default function Card({
             <div className="flex justify-center gap-3 mb-6">
               <button
                 className="flex items-center gap-2 transition-colors text-sm md:text-base px-4 py-2 rounded-lg bg-transparent text-primary hover:bg-secondary hover:text-secondary-foreground"
-                onClick={handleAddFavorite}
+                onClick={OnAddFavorite}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +44,7 @@ export default function Card({
               </button>
               <button
                 className="flex items-center gap-2 text-sm md:text-base transition-all duration-200 px-4 py-2 rounded-lg bg-primary text-primary-foreground shadow-md"
-                onClick={onNewQuote}
+                onClick={OnNewQuote}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -101,4 +87,3 @@ export default function Card({
     </div>
   );
 }
-
