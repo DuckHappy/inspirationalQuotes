@@ -5,6 +5,7 @@ import FavoritesDrawer from "./components/favorites/favorites.tsx";
 import Card from "./components/Card/Card.tsx";
 import quotesData from "../mockup/useQuoteApi.json";
 import { useState, useEffect } from "react";
+import NavBar from "./components/NavBar.tsx";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function AppContent() {
     <div>
       <QuoteCount />
       <Header />
+      <NavBar />
       <main>
         {currentQuote && (
           <Card
