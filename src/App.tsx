@@ -7,31 +7,22 @@ import quotesData from "../mockup/useQuoteApi.json";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   return (
     <CacheProvider>
-      <AppContent
-        currentIndex={currentIndex}
-        setCurrentIndex={setCurrentIndex}
-      />
+      <AppContent />
     </CacheProvider>
   );
 }
 
-type AppContentProps = {
-  currentIndex: number;
-  setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
-};
-
-function AppContent({ currentIndex, setCurrentIndex }: AppContentProps) {
+function AppContent() {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const { getItem, setItem } = useCacheContext();
 
   useEffect(() => {
     if (!getItem("quotes")) {
       setItem("quotes", quotesData);
     }
-  }, [getItem, setItem]);
+  }, []);
 
   const quotesArray = getItem("quotes") || [];
   const currentQuote = quotesArray[currentIndex];
